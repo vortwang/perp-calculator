@@ -93,25 +93,29 @@ export const calculateLiquidationPrice = (
     quantity: number,
     leverage: number,
     mmr: number,
-    direction: 'long' | 'short'
+    direction: 'long' | 'short',
+    walletBalance?: number
 ): number => {
-    if (quantity === 0 || leverage === 0) return 0;
+    if (entryPrice <= 0 || quantity <= 0 || mmr <= 0) return 0;
+    if (walletBalance === undefined && leverage <= 0) return 0;
 
-    const im = (quantity * entryPrice) / leverage;
-    const imPerQty = im / quantity; // = EntryPrice / Leverage
+    // If walletBalance is provided, use it as the margin backing the position
+    // If not, calculate Initial Margin based on leverage
+    const margin = walletBalance !== undefined ? walletBalance : (quantity * entryPrice) / leverage;
 
     if (direction === 'long') {
-        // LP = (Entry - IM/Q) / (1 - MMR)
-        const num = entryPrice - imPerQty;
-        const den = 1 - mmr;
-        if (den === 0) return 0;
-        const lp = num / den;
+        // Formula: (Qty * Entry - Margin) / (Qty * (1 - MMR))
+        const numerator = (quantity * entryPrice) - margin;
+        const denominator = quantity * (1 - mmr);
+        if (denominator === 0) return 0;
+        const lp = numerator / denominator;
         return lp > 0 ? lp : 0;
     } else {
-        // LP = (Entry + IM/Q) / (1 + MMR)
-        const num = entryPrice + imPerQty;
-        const den = 1 + mmr;
-        return num / den;
+        // Formula: (Qty * Entry + Margin) / (Qty * (1 + MMR))
+        const numerator = (quantity * entryPrice) + margin;
+        const denominator = quantity * (1 + mmr);
+        const lp = numerator / denominator;
+        return lp > 0 ? lp : 0;
     }
 };
 

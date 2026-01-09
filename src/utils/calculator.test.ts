@@ -29,6 +29,27 @@ describe('Calculator Logic', () => {
         expect(lp).toBeCloseTo(9045.226, 2);
     });
 
+    it('should calculateLiquidationPrice short', () => {
+        // Entry 100, Qty 10, Lev 10 (IM 100). MMR 0.05.
+        // Short: (100 + 1000) / (10 * 1.05) = 1100 / 10.5 = 104.76
+        const res = calculateLiquidationPrice(100, 10, 10, 0.05, 'short');
+        expect(res).toBeCloseTo(104.76, 2);
+    });
+
+    it('should calculateLiquidationPrice with wallet balance (Long)', () => {
+        // Entry 100, Qty 10. Balance 200. MMR 0.05.
+        // Long: (1000 - 200) / (10 * 0.95) = 800 / 9.5 = 84.21
+        const res = calculateLiquidationPrice(100, 10, 0, 0.05, 'long', 200);
+        expect(res).toBeCloseTo(84.21, 2);
+    });
+
+    it('should calculateLiquidationPrice with wallet balance (Short)', () => {
+        // Entry 100, Qty 10. Balance 200. MMR 0.05.
+        // Short: (1000 + 200) / (10 * 1.05) = 1200 / 10.5 = 114.28
+        const res = calculateLiquidationPrice(100, 10, 0, 0.05, 'short', 200);
+        expect(res).toBeCloseTo(114.28, 2);
+    });
+
     it('should calculate Liquidation Price for Short', () => {
         // Short 1 BTC at 10000, 10x Lev.
         // LP = (Entry + IM/Q) / (1 + MMR)

@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { calculateAll, calculateTargetClosePrice, DEFAULT_TAKER_FEE_RATE, DEFAULT_MMR } from '../utils/calculator';
+import { calculateAll, calculateTargetClosePrice, calculateLiquidationPrice, DEFAULT_TAKER_FEE_RATE, DEFAULT_MMR } from '../utils/calculator';
 import type { CalculatorState } from '../utils/calculator';
 
 type Tab = 'revenue' | 'close_price' | 'liq_price';
@@ -22,6 +22,9 @@ const Calculator: React.FC = () => {
     const [targetMethod, setTargetMethod] = useState<'pnl' | 'roe'>('roe');
     const [targetValue, setTargetValue] = useState<string>('100'); // % or Value
 
+    // Liq Price State
+    const [walletBalance, setWalletBalance] = useState<string>('');
+
     // Results
     const [result, setResult] = useState<ReturnType<typeof calculateAll> | null>(null);
     const [targetResult, setTargetResult] = useState<number | null>(null);
@@ -42,6 +45,23 @@ const Calculator: React.FC = () => {
             const val = targetMethod === 'roe' ? tVal / 100 : tVal;
             const res = calculateTargetClosePrice(entry, qty, lev, val, targetMethod, direction);
             setTargetResult(res);
+            return;
+        }
+
+        if (activeTab === 'liq_price') {
+            const wb = walletBalance ? parseFloat(walletBalance) : undefined;
+            const lp = calculateLiquidationPrice(entry, qty, lev, DEFAULT_MMR, direction, wb);
+            setResult({
+                initialMargin: 0,
+                orderCost: 0,
+                maintenanceMargin: 0,
+                liquidationPrice: lp,
+                bankruptcyPrice: 0,
+                unrealizedPnL: 0,
+                roe: 0,
+                estimatedOpenFee: 0,
+                liqRiskRate: 0
+            });
             return;
         }
 
@@ -205,6 +225,30 @@ const Calculator: React.FC = () => {
                             <span className="pr-3 text-gray-500 text-sm">USDT</span>
                         </div>
                     </div>
+
+                    {/* Available Balance - Only for Liq Price */}
+                    {activeTab === 'liq_price' && (
+                        <div className="flex items-center justify-between">
+                            <div className="flex items-center gap-1 group relative">
+                                <label className="text-gray-400 w-24">可用余额</label>
+                                <div className="cursor-pointer text-gray-500 hover:text-white rounded-full border border-gray-500 w-4 h-4 flex items-center justify-center text-xs">i</div>
+                                {/* Tooltip */}
+                                <div className="absolute bottom-full left-0 mb-2 w-64 p-2 bg-black text-xs text-white rounded shadow-lg opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-20">
+                                    计算当前持仓的强平价格时，输入的可用余额需包含委托单中的冻结保证金。
+                                </div>
+                            </div>
+                            <div className="flex-1 bg-[#2b3139] rounded flex items-center border border-transparent hover:border-gray-500 transition-colors focus-within:border-[#fcd535]">
+                                <input
+                                    type="number"
+                                    className="w-full bg-transparent p-2 text-white outline-none text-right appearance-none"
+                                    value={walletBalance}
+                                    placeholder="不填则按默认杠杆计算"
+                                    onChange={(e) => setWalletBalance(e.target.value)}
+                                />
+                                <span className="pr-3 text-gray-500 text-sm">USDT</span>
+                            </div>
+                        </div>
+                    )}
 
                     {/* Exit Price - Only for Revenue */}
                     {activeTab === 'revenue' && (
