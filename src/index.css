@@ -1,0 +1,18 @@
+@import "tailwindcss";
+
+@theme {
+  --color-gray-900: #111827;
+  /* v4 has defaults, but if it fails to find them, we can check. 
+     However, standard v4 should have gray-900. 
+     If it fails, it might be that @apply in the same file works differently.
+     Standard practice: use utility classes in HTML, or @apply in CSS.
+  */
+}
+
+/* 
+  In v4, to use @apply with default utilities, you just need @import "tailwindcss".
+*/
+
+body {
+  @apply bg-gray-900 text-white;
+}
