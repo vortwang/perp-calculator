@@ -1,73 +1,70 @@
-# React + TypeScript + Vite
+# Perp Calculator (USDT-Margined)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A powerful, user-friendly Perpetual Contract Calculator built with React and TailwindCSS. Designed for crypto traders to calculate PnL, Target Prices, and Liquidation Prices with precision.
 
-Currently, two official plugins are available:
+![License](https://img.shields.io/badge/license-MIT-blue.svg)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Features
 
-## React Compiler
+- **Revenue Calculator**: 
+  - Calculate Initial Margin, Unrealized PnL, and ROE.
+  - Supports Long and Short directions.
+  - Adjustable leverage and quantity.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- **Target Close Price**: 
+  - Calculate the required exit price to achieve a specific target PnL (amount) or ROE (%).
 
-## Expanding the ESLint configuration
+- **Liquidation Price**: 
+  - Precise liquidation price calculation for Isolated Margin.
+  - **New**: Supports "Available Balance" input to simulate cross-margin scenarios or balance-impacted liquidation prices.
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- **Multiple Symbols Support**:
+  - Supports major trading pairs: BTC, ETH, SOL, BNB, XRP, TON, LINK, OP, ARB, DOGE (USDT pairs).
+  - Dynamic unit display based on selected symbol.
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+- **Localized UI**:
+  - Fully translated into Chinese (Simplified) for accessibility.
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+- **Premium Design**:
+  - Dark mode aesthetic inspired by top-tier trading platforms.
+  - Responsive and intuitive layout.
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+## Tech Stack
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+- **Frontend**: React (Vite), TypeScript
+- **Styling**: TailwindCSS v4
+- **Testing**: Vitest for robust calculation logic verification
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## Getting Started
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+### Prerequisites
+
+- Node.js (v18 or higher)
+- npm or yarn
+
+### Installation
+
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/vortwang/perp-calculator.git
+   cd perp-calculator
+   ```
+
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
+
+3. Start the development server:
+   ```bash
+   npm run dev
+   ```
+
+4. Run tests:
+   ```bash
+   npm run test
+   ```
+
+## License
+
+MIT
