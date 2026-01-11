@@ -1,70 +1,70 @@
-# Perp Calculator (USDT-Margined)
+# 永续合约计算器 (USDT本位)
 
-A powerful, user-friendly Perpetual Contract Calculator built with React and TailwindCSS. Designed for crypto traders to calculate PnL, Target Prices, and Liquidation Prices with precision.
+一个功能强大、用户友好的永续合约计算器，基于 React 和 TailwindCSS 构建。专为加密货币交易者设计，可精确计算收益 (PnL)、目标平仓价格和强平价格。
 
 ![License](https://img.shields.io/badge/license-MIT-blue.svg)
 
-## Features
+## 功能特性
 
-- **Revenue Calculator**: 
-  - Calculate Initial Margin, Unrealized PnL, and ROE.
-  - Supports Long and Short directions.
-  - Adjustable leverage and quantity.
+- **收益计算器**: 
+  - 计算初始保证金、未实现盈亏 (PnL) 和 收益率 (ROE)。
+  - 支持做多 (Long) 和做空 (Short) 双向计算。
+  - 灵活调整杠杆倍数和开仓数量。
 
-- **Target Close Price**: 
-  - Calculate the required exit price to achieve a specific target PnL (amount) or ROE (%).
+- **目标平仓价格**: 
+  - 根据预期的 目标收益额 (PnL) 或 收益率 (ROE) 反推所需的平仓价格。
 
-- **Liquidation Price**: 
-  - Precise liquidation price calculation for Isolated Margin.
-  - **New**: Supports "Available Balance" input to simulate cross-margin scenarios or balance-impacted liquidation prices.
+- **强平价格 (强平价)**: 
+  - 精确的逐仓模式强平价格计算。
+  - **新增**: 支持输入 "可用余额" (Available Balance)，模拟全仓模式或包含账户余额影响的强平价格计算。
 
-- **Multiple Symbols Support**:
-  - Supports major trading pairs: BTC, ETH, SOL, BNB, XRP, TON, LINK, OP, ARB, DOGE (USDT pairs).
-  - Dynamic unit display based on selected symbol.
+- **多币种支持**:
+  - 支持主流交易对: BTC, ETH, SOL, BNB, XRP, TON, LINK, OP, ARB, DOGE (均为 USDT 交易对)。
+  - 根据选择的币种动态显示数量单位。
 
-- **Localized UI**:
-  - Fully translated into Chinese (Simplified) for accessibility.
+- **本地化界面**:
+  - 全中文 (简体) 界面，贴合中文用户习惯。
 
-- **Premium Design**:
-  - Dark mode aesthetic inspired by top-tier trading platforms.
-  - Responsive and intuitive layout.
+- **高级设计**:
+  - 采用类似于顶级交易平台的深色模式 (Dark Mode) 设计。
+  - 响应式布局，操作直观流畅。
 
-## Tech Stack
+## 技术栈
 
-- **Frontend**: React (Vite), TypeScript
-- **Styling**: TailwindCSS v4
-- **Testing**: Vitest for robust calculation logic verification
+- **前端**: React (Vite), TypeScript
+- **样式**: TailwindCSS v4
+- **测试**: Vitest (用于验证核心计算逻辑的准确性)
 
-## Getting Started
+## 快速开始
 
-### Prerequisites
+### 前置要求
 
-- Node.js (v18 or higher)
-- npm or yarn
+- Node.js (v18 或更高版本)
+- npm 或 yarn
 
-### Installation
+### 安装步骤
 
-1. Clone the repository:
+1. 克隆仓库:
    ```bash
    git clone https://github.com/vortwang/perp-calculator.git
    cd perp-calculator
    ```
 
-2. Install dependencies:
+2. 安装依赖:
    ```bash
    npm install
    ```
 
-3. Start the development server:
+3. 启动开发服务器:
    ```bash
    npm run dev
    ```
 
-4. Run tests:
+4. 运行测试:
    ```bash
    npm run test
    ```
 
-## License
+## 许可证
 
 MIT
