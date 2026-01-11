@@ -103,18 +103,24 @@ export const calculateLiquidationPrice = (
     // If not, calculate Initial Margin based on leverage
     const margin = walletBalance !== undefined ? walletBalance : (quantity * entryPrice) / leverage;
 
+    // Simplified Isolated Formula:
+    // Long: Entry - (Margin - MM) / Qty
+    // Short: Entry + (Margin - MM) / Qty
+
+    // MM is fixed based on Entry Value for this specific simplified model provided by user
+    const maintenanceMargin = quantity * entryPrice * mmr;
+
     if (direction === 'long') {
-        // Formula: (Qty * Entry - Margin) / (Qty * (1 - MMR))
-        const numerator = (quantity * entryPrice) - margin;
-        const denominator = quantity * (1 - mmr);
-        if (denominator === 0) return 0;
-        const lp = numerator / denominator;
+        // numerator = Margin - MM
+        const buffer = margin - maintenanceMargin;
+        // LP = Entry - buffer / Qty
+        const lp = entryPrice - (buffer / quantity);
         return lp > 0 ? lp : 0;
     } else {
-        // Formula: (Qty * Entry + Margin) / (Qty * (1 + MMR))
-        const numerator = (quantity * entryPrice) + margin;
-        const denominator = quantity * (1 + mmr);
-        const lp = numerator / denominator;
+        // Short
+        // LP = Entry + buffer / Qty
+        const buffer = margin - maintenanceMargin;
+        const lp = entryPrice + (buffer / quantity);
         return lp > 0 ? lp : 0;
     }
 };
