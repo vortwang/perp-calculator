@@ -2,7 +2,6 @@
 
 一个功能强大、用户友好的永续合约计算器，基于 React 和 TailwindCSS 构建。专为加密货币交易者设计，可精确计算收益 (PnL)、目标平仓价格和强平价格。
 
-![License](https://img.shields.io/badge/license-MIT-blue.svg)
 
 ## 主要功能
 
@@ -67,4 +66,4 @@
 
 ## 许可证
 
-MIT
+![License](https://img.shields.io/badge/license-MIT-blue.svg)
